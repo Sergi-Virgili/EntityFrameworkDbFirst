@@ -1,4 +1,5 @@
 ﻿using Common;
+using DataAccess.SQLDataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +10,23 @@ namespace DataAccess
 {
     public class StudentDao : IStudentDao
     {
-        public Student Add(StudentDao student)
+        public Student Add(Student student)
+        {
+            using (VuelingDbContext vueling = new VuelingDbContext())
+            {
+                var studentTable = new StudentMap().ToStudentTable(student);
+                vueling.TableStudents.Add(studentTable);
+                vueling.SaveChanges();
+                return student;
+            }
+        }
+
+        public bool Delete(Student student)
         {
             throw new NotImplementedException();
         }
 
-        public Student Delete(StudentDao student)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Student GetAll()
+        public List<Student> GetAll()
         {
             throw new NotImplementedException();
         }
@@ -29,7 +36,7 @@ namespace DataAccess
             throw new NotImplementedException();
         }
 
-        public Student Update(StudentDao student)
+        public Student Update(Student student)
         {
             throw new NotImplementedException();
         }
