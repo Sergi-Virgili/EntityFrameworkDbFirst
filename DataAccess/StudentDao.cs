@@ -23,7 +23,13 @@ namespace DataAccess
 
         public bool Delete(Student student)
         {
-            throw new NotImplementedException();
+            using (VuelingDbContext vueling = new VuelingDbContext())
+            {
+                var deleteStudent = vueling.TableStudents.Where(s => s.StudentId == student.StudentId).FirstOrDefault();
+                vueling.TableStudents.Remove(deleteStudent);
+                vueling.SaveChanges();
+            }
+            return true;
         }
 
         public List<Student> GetAll()
