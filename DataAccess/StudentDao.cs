@@ -45,7 +45,11 @@ namespace DataAccess
 
         public Student GetById(int id)
         {
-            throw new NotImplementedException();
+            using (VuelingDbContext vueling = new VuelingDbContext())
+            {
+                var findedStudent = vueling.TableStudents.Where(s => s.StudentId == id).FirstOrDefault();
+                return new StudentMap().ToStudent(findedStudent);
+            }
         }
 
         public Student Update(Student student)
