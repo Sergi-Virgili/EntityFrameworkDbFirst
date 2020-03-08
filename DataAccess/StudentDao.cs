@@ -34,7 +34,13 @@ namespace DataAccess
 
         public List<Student> GetAll()
         {
-            throw new NotImplementedException();
+            using (VuelingDbContext vueling = new VuelingDbContext())
+            {
+                var studentsTable = vueling.TableStudents.ToList();
+                var students = new List<Student>();
+                studentsTable.ForEach(studentTable => students.Add(new StudentMap().ToStudent(studentTable)));
+                return students;
+            }
         }
 
         public Student GetById(int id)
