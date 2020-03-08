@@ -54,7 +54,14 @@ namespace DataAccess
 
         public Student Update(Student student)
         {
-            throw new NotImplementedException();
+            using (VuelingDbContext vueling = new VuelingDbContext())
+            {
+                var studentUpdate = vueling.TableStudents.Where(s => s.StudentId == student.StudentId).FirstOrDefault();
+                var studentUpdated = new StudentMap().ToStudentTable(student);
+                vueling.Entry(studentUpdate).CurrentValues.SetValues(studentUpdated);
+                vueling.SaveChanges();
+                return student;
+            }
         }
     }
 }
