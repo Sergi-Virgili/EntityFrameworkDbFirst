@@ -56,13 +56,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SQLDataBase.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="SQLDataBase\SQLDataBase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SQLDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="SQLDataBase\SQLDataBase.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SQLDataBase.edmx</DependentUpon>
     </Compile>
+    <Compile Include="SQLDataBase\TableStudent.cs">
+      <DependentUpon>SQLDataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="StudentDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StudentMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -87,6 +96,12 @@
     <Content Include="SQLDataBase\SQLDataBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SQLDataBase.Context.cs</LastGenOutput>
+      <DependentUpon>SQLDataBase.edmx</DependentUpon>
+    </Content>
+    <Content Include="SQLDataBase\SQLDataBase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SQLDataBase.edmx</DependentUpon>
+      <LastGenOutput>SQLDataBase.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

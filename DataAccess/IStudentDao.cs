@@ -9,10 +9,10 @@ namespace DataAccess
 {
     interface IStudentDao
     {
-        Student Add(StudentDao student);
-        Student Delete(StudentDao student);
-        Student GetAll();
-        Student Update(StudentDao student);
+        Student Add(Student student);
+        bool Delete(Student student);
+        List<Student> GetAll();
+        Student Update(Student student);
         Student GetById(int id);
     }
 }
