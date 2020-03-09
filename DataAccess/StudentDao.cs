@@ -82,14 +82,13 @@ namespace DataAccess
 
         public List<Student> GetAll()
         {
+            List<Student> students = new List<Student>();
             try
             {
                 using (VuelingDbContext vueling = new VuelingDbContext())
                 {
                     var studentsTable = vueling.TableStudents.ToList();
-                    var students = new List<Student>();
                     studentsTable.ForEach(studentTable => students.Add(StudentMap.ToStudent(studentTable)));
-                    return students;
                 }
             }
             catch (ArgumentNullException ex)
@@ -97,15 +96,25 @@ namespace DataAccess
                 log.Error("Null Argument", ex);
                 throw;
             }
+
+            log.Info("Get All Students");
+            return students;
         }
-        
+
 
         public Student GetById(int id)
         {
-            using (VuelingDbContext vueling = new VuelingDbContext())
+            try { 
+                using (VuelingDbContext vueling = new VuelingDbContext())
+                {
+                    var findedStudent = vueling.TableStudents.Where(s => s.StudentId == id).FirstOrDefault();
+                    return StudentMap.ToStudent(findedStudent);
+                }
+            }
+            catch (ArgumentNullException ex)
             {
-                var findedStudent = vueling.TableStudents.Where(s => s.StudentId == id).FirstOrDefault();
-                return StudentMap.ToStudent(findedStudent);
+                log.Error("Null Argument With Student Id "+ id, ex);
+                throw;
             }
         }
 
