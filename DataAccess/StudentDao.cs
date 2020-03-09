@@ -82,14 +82,23 @@ namespace DataAccess
 
         public List<Student> GetAll()
         {
-            using (VuelingDbContext vueling = new VuelingDbContext())
+            try
             {
-                var studentsTable = vueling.TableStudents.ToList();
-                var students = new List<Student>();
-                studentsTable.ForEach(studentTable => students.Add(StudentMap.ToStudent(studentTable)));
-                return students;
+                using (VuelingDbContext vueling = new VuelingDbContext())
+                {
+                    var studentsTable = vueling.TableStudents.ToList();
+                    var students = new List<Student>();
+                    studentsTable.ForEach(studentTable => students.Add(StudentMap.ToStudent(studentTable)));
+                    return students;
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                log.Error("Null Argument", ex);
+                throw;
             }
         }
+        
 
         public Student GetById(int id)
         {
