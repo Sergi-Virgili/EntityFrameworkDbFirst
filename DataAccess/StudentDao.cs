@@ -48,12 +48,35 @@ namespace DataAccess
 
         public bool Delete(Student student)
         {
-            using (VuelingDbContext vueling = new VuelingDbContext())
-            {
-                var deleteStudent = vueling.TableStudents.Where(s => s.StudentId == student.StudentId).FirstOrDefault();
-                vueling.TableStudents.Remove(deleteStudent);
-                vueling.SaveChanges();
+            try { 
+                using (VuelingDbContext vueling = new VuelingDbContext())
+                    {
+                        var deleteStudent = vueling.TableStudents.Where(s => s.StudentId == student.StudentId).FirstOrDefault();
+                        vueling.TableStudents.Remove(deleteStudent);
+                        vueling.SaveChanges();
+                    }
             }
+            catch (ArgumentNullException ex)
+            {
+                log.Error("Null Argument With Data" + LogMessage.Student(student), ex);
+                throw;
+            }
+            catch (DbUpdateException ex)
+            {
+                log.Error("DataBase Update Exception With Data" + LogMessage.Student(student), ex);
+                throw;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                log.Error("Entity Validation Exception With Data" + LogMessage.Student(student), ex);
+                throw;
+            }
+            catch (NotSupportedException ex)
+            {
+                log.Error("Action Not Supported With Data" + LogMessage.Student(student), ex);
+                throw;
+            }
+            log.Info("DELETED: " + LogMessage.Student(student));
             return true;
         }
 
