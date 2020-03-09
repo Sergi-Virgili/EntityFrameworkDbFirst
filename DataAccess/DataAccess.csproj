@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IStudentDao.cs" />
+    <Compile Include="LogMessage.cs" />
     <Compile Include="SQLDataBase\SQLDataBase.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

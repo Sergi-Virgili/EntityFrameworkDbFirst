@@ -12,11 +12,10 @@ namespace DataAccess
 {
     public class StudentDao : IStudentDao
     {
-        private Student addedStudent;
+        Student addedStudent;
         private static readonly ILog log = LogManager.GetLogger(typeof(StudentDao));
         public Student Add(Student student)
-        {
-            
+        { 
             try
             {
                 using (VuelingDbContext vueling = new VuelingDbContext())
@@ -104,11 +103,11 @@ namespace DataAccess
 
         public Student GetById(int id)
         {
+            TableStudent findedStudent;
             try { 
                 using (VuelingDbContext vueling = new VuelingDbContext())
                 {
-                    var findedStudent = vueling.TableStudents.Where(s => s.StudentId == id).FirstOrDefault();
-                    return StudentMap.ToStudent(findedStudent);
+                     findedStudent = vueling.TableStudents.Where(s => s.StudentId == id).FirstOrDefault();
                 }
             }
             catch (ArgumentNullException ex)
@@ -116,18 +115,44 @@ namespace DataAccess
                 log.Error("Null Argument With Student Id "+ id, ex);
                 throw;
             }
+            log.Info("Get Student by id = " + id);
+            return StudentMap.ToStudent(findedStudent);
         }
 
         public Student Update(Student student)
         {
-            using (VuelingDbContext vueling = new VuelingDbContext())
-            {
-                var studentUpdate = vueling.TableStudents.Where(s => s.StudentId == student.StudentId).FirstOrDefault();
-                var studentUpdated = StudentMap.ToStudentTable(student);
-                vueling.Entry(studentUpdate).CurrentValues.SetValues(studentUpdated);
-                vueling.SaveChanges();
-                return student;
+            try 
+            { 
+                using (VuelingDbContext vueling = new VuelingDbContext())
+                {
+                    var studentUpdate = vueling.TableStudents.Where(s => s.StudentId == student.StudentId).FirstOrDefault();
+                    var studentUpdated = StudentMap.ToStudentTable(student);
+                    vueling.Entry(studentUpdate).CurrentValues.SetValues(studentUpdated);
+                    vueling.SaveChanges();
+                }
             }
+            catch (DbUpdateException ex)
+            {
+                log.Error("DataBase Update Exception With Data" + LogMessage.Student(student), ex);
+                throw;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                log.Error("Entity Validation Exception With Data" + LogMessage.Student(student), ex);
+                throw;
+            }
+            catch (NotSupportedException ex)
+            {
+                log.Error("Action Not Supported With Data" + LogMessage.Student(student), ex);
+                throw;
+            }
+            catch (ArgumentNullException ex)
+            {
+                log.Error("Null Argument With Data" + LogMessage.Student(student), ex);
+                throw;
+            }
+            log.Info("UPDATED: " + LogMessage.Student(student));
+            return student;
         }
     }
 }
