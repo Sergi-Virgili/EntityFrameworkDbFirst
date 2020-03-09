@@ -1,16 +1,11 @@
 ﻿using Common;
 using DataAccess.SQLDataBase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DataAccess
 {
     public static class StudentMap
-    {
-        
+    { 
         public static TableStudent ToStudentTable(Student student)
         {
             var studentTable = new TableStudent()
@@ -28,15 +23,12 @@ namespace DataAccess
         public static Student ToStudent(TableStudent studentTable)
         {
             var student = new Student()
-
             {
-
                 StudentId = studentTable.StudentId,
                 Name = studentTable.Name,
                 Surname = studentTable.Surname,
                 AgeOfBirth = studentTable.Birthday
             };
-
             return student;
         }
 
