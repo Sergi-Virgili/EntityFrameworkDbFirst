@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessIntegrationTests"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Acces Integration Tests", "Data Acces Integration Tests", "{5D0BAC77-45B0-41F2-9905-96AAB72DFFAE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Tier", "Business Tier", "{3ECF731E-5E68-4C5B-9895-A31D31B24CA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{92396995-55D4-4B9D-8ACD-EAF250A21B52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{1B06B4F3-099E-48FA-906D-5EA47AF2B4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B06B4F3-099E-48FA-906D-5EA47AF2B4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B06B4F3-099E-48FA-906D-5EA47AF2B4C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92396995-55D4-4B9D-8ACD-EAF250A21B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92396995-55D4-4B9D-8ACD-EAF250A21B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92396995-55D4-4B9D-8ACD-EAF250A21B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92396995-55D4-4B9D-8ACD-EAF250A21B52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{432B54ED-36A8-4F28-99BA-75BFA96EF383} = {74CA2E3A-410A-4104-8AB8-EE6D560BBAD7}
 		{10E5E78D-A519-4D81-B493-42FF6B464488} = {752B2620-A7C7-4851-B090-255E0B6589E1}
 		{1B06B4F3-099E-48FA-906D-5EA47AF2B4C5} = {5D0BAC77-45B0-41F2-9905-96AAB72DFFAE}
+		{92396995-55D4-4B9D-8ACD-EAF250A21B52} = {3ECF731E-5E68-4C5B-9895-A31D31B24CA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5697B82-117C-486A-AB6F-D8D14B8023BE}

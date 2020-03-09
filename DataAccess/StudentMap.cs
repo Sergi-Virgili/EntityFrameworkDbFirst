@@ -10,7 +10,7 @@ namespace DataAccess
 {
     class StudentMap
     {
-        {
+        
         public TableStudent ToStudentTable(Student student)
         {
             var studentTable = new TableStudent()
@@ -42,4 +42,4 @@ namespace DataAccess
 
     }
 }
-}
+

@@ -1,24 +1,37 @@
 ﻿using Common;
 using DataAccess.SQLDataBase;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DataAccess
 {
     public class StudentDao : IStudentDao
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(StudentDao));
         public Student Add(Student student)
         {
-            using (VuelingDbContext vueling = new VuelingDbContext())
+            log.Info(student.Name + " - Start ADD");
+            TableStudent addedStudent;
+            try
             {
-                var studentTable = new StudentMap().ToStudentTable(student);
-                vueling.TableStudents.Add(studentTable);
-                vueling.SaveChanges();
-                return student;
+                using (VuelingDbContext vueling = new VuelingDbContext())
+                {
+                    var studentTable = new StudentMap().ToStudentTable(student);
+                    addedStudent = vueling.TableStudents.Add(studentTable);
+                    vueling.SaveChanges();     
+                }
             }
+            catch (Exception ex)
+            {
+                log.Error("Exception Message", ex);
+                throw;
+            }
+            log.Info("Student saved");
+            return new StudentMap().ToStudent(addedStudent);
+
         }
 
         public bool Delete(Student student)
