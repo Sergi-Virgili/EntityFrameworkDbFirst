@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    class StudentMap
+    public static class StudentMap
     {
         
-        public TableStudent ToStudentTable(Student student)
+        public static TableStudent ToStudentTable(Student student)
         {
             var studentTable = new TableStudent()
 
@@ -25,7 +25,7 @@ namespace DataAccess
             return studentTable;
         }
 
-        public Student ToStudent(TableStudent studentTable)
+        public static Student ToStudent(TableStudent studentTable)
         {
             var student = new Student()
 
