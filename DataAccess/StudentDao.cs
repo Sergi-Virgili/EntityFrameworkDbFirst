@@ -10,17 +10,17 @@ using System.Data.Entity.Validation;
 
 namespace DataAccess
 {
-    public class StudentDao : IStudentDao
+    public class StudentDao : IDao<Student>
     {
         Student addedStudent;
         private static readonly ILog log = LogManager.GetLogger(typeof(StudentDao));
-        public Student Add(Student student)
+        public Student Add(Student model)
         { 
             try
             {
                 using (VuelingDbContext vueling = new VuelingDbContext())
                 {
-                    var studentTable =  StudentMap.ToStudentTable(student);
+                    var studentTable =  StudentMap.ToStudentTable(model);
                     var TableAddedStudent = vueling.TableStudents.Add(studentTable);
                     addedStudent = StudentMap.ToStudent(TableAddedStudent);
                     vueling.SaveChanges();     
@@ -45,37 +45,37 @@ namespace DataAccess
             return addedStudent;
         }
 
-        public bool Delete(Student student)
+        public bool Delete(Student model)
         {
             try { 
                 using (VuelingDbContext vueling = new VuelingDbContext())
                     {
-                        var deleteStudent = vueling.TableStudents.Where(s => s.StudentId == student.StudentId).FirstOrDefault();
+                        var deleteStudent = vueling.TableStudents.Where(s => s.StudentId == model.StudentId).FirstOrDefault();
                         vueling.TableStudents.Remove(deleteStudent);
                         vueling.SaveChanges();
                     }
             }
             catch (ArgumentNullException ex)
             {
-                log.Error("Null Argument With Data" + LogMessage.Student(student), ex);
+                log.Error("Null Argument With Data" + LogMessage.Student(model), ex);
                 throw;
             }
             catch (DbUpdateException ex)
             {
-                log.Error("DataBase Update Exception With Data" + LogMessage.Student(student), ex);
+                log.Error("DataBase Update Exception With Data" + LogMessage.Student(model), ex);
                 throw;
             }
             catch (DbEntityValidationException ex)
             {
-                log.Error("Entity Validation Exception With Data" + LogMessage.Student(student), ex);
+                log.Error("Entity Validation Exception With Data" + LogMessage.Student(model), ex);
                 throw;
             }
             catch (NotSupportedException ex)
             {
-                log.Error("Action Not Supported With Data" + LogMessage.Student(student), ex);
+                log.Error("Action Not Supported With Data" + LogMessage.Student(model), ex);
                 throw;
             }
-            log.Info("DELETED: " + LogMessage.Student(student));
+            log.Info("DELETED: " + LogMessage.Student(model));
             return true;
         }
 
@@ -119,40 +119,40 @@ namespace DataAccess
             return StudentMap.ToStudent(findedStudent);
         }
 
-        public Student Update(Student student)
+        public Student Update(Student model)
         {
             try 
             { 
                 using (VuelingDbContext vueling = new VuelingDbContext())
                 {
-                    var studentUpdate = vueling.TableStudents.Where(s => s.StudentId == student.StudentId).FirstOrDefault();
-                    var studentUpdated = StudentMap.ToStudentTable(student);
+                    var studentUpdate = vueling.TableStudents.Where(s => s.StudentId == model.StudentId).FirstOrDefault();
+                    var studentUpdated = StudentMap.ToStudentTable(model);
                     vueling.Entry(studentUpdate).CurrentValues.SetValues(studentUpdated);
                     vueling.SaveChanges();
                 }
             }
             catch (DbUpdateException ex)
             {
-                log.Error("DataBase Update Exception With Data" + LogMessage.Student(student), ex);
+                log.Error("DataBase Update Exception With Data" + LogMessage.Student(model), ex);
                 throw;
             }
             catch (DbEntityValidationException ex)
             {
-                log.Error("Entity Validation Exception With Data" + LogMessage.Student(student), ex);
+                log.Error("Entity Validation Exception With Data" + LogMessage.Student(model), ex);
                 throw;
             }
             catch (NotSupportedException ex)
             {
-                log.Error("Action Not Supported With Data" + LogMessage.Student(student), ex);
+                log.Error("Action Not Supported With Data" + LogMessage.Student(model), ex);
                 throw;
             }
             catch (ArgumentNullException ex)
             {
-                log.Error("Null Argument With Data" + LogMessage.Student(student), ex);
+                log.Error("Null Argument With Data" + LogMessage.Student(model), ex);
                 throw;
             }
-            log.Info("UPDATED: " + LogMessage.Student(student));
-            return student;
+            log.Info("UPDATED: " + LogMessage.Student(model));
+            return model;
         }
     }
 }
